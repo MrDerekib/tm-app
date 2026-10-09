@@ -66,15 +66,6 @@ class App(tk.Tk):
         self.terminal_text = TerminalText()
         self.session = 0
         DATA.mkdir(parents=True, exist_ok=True)
-        self.preferences_path = DATA / 'preferences.json'
-        confirm_operations = True
-        try:
-            preferences = json.loads(self.preferences_path.read_text(encoding='utf-8'))
-            if isinstance(preferences, dict) and isinstance(preferences.get('confirm_operations'), bool):
-                confirm_operations = preferences['confirm_operations']
-        except (OSError, ValueError):
-            pass
-        self.confirm_operations = tk.BooleanVar(value=confirm_operations)
         self.appearance_path = DATA / 'appearance.json'
         self.appearance = {'family': 'Consolas', 'size': 10, 'foreground': '#dce7f4', 'background': '#152132'}
         try:
@@ -250,8 +241,6 @@ class App(tk.Tk):
         self.run_btn = ttk.Button(left, text='Ejecutar operación', command=self.execute,
                                   state='disabled', style='Primary.TButton')
         self.run_btn.pack(fill='x')
-        ttk.Checkbutton(left, text='Confirmar operaciones sensibles', variable=self.confirm_operations,
-                        command=self.save_preferences, style='Card.TCheckbutton').pack(anchor='w', pady=(8, 0))
         ttk.Label(right, text='Respuesta del equipo', style='Section.TLabel').pack(anchor='w')
         frame = ttk.Frame(right, style='Border.TFrame', padding=1)
         frame.pack(fill='both', expand=True, pady=8)
@@ -285,14 +274,6 @@ class App(tk.Tk):
 
     def apply_appearance(self, values):
         self.console.configure(font=(values['family'], values['size']), fg=values['foreground'], bg=values['background'], insertbackground=values['foreground'])
-
-    def save_preferences(self):
-        try:
-            temporary = self.preferences_path.with_suffix('.tmp')
-            temporary.write_text(json.dumps({'confirm_operations': self.confirm_operations.get()}, indent=2), encoding='utf-8')
-            temporary.replace(self.preferences_path)
-        except OSError as exc:
-            messagebox.showerror('No se pudieron guardar las preferencias', str(exc), parent=self)
 
     def edit_appearance(self):
         win = tk.Toplevel(self)
@@ -618,8 +599,6 @@ class App(tk.Tk):
         if not selection or self.busy or self.transport is None:
             return
         op = self.current()['operations'][selection[0]]
-        if self.confirm_operations.get() and op.get('confirm') and not messagebox.askyesno(op['name'], op['confirm'], parent=self):
-            return
         parameters = parameters_for(op['steps'])
         if parameters:
             values = self.ask_parameters(op['name'], parameters)

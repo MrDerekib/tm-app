@@ -215,7 +215,6 @@ class Tests(unittest.TestCase):
         operation = next(op for op in profile['machines'][0]['operations'] if op['name'] == 'Machaque Título')
         self.assertEqual(operation['steps'][5]['default'], '50')
         operation['steps'][5] = {'send': '50', 'delay_ms': 200}
-        operation['confirm'] = 'Se enviará la secuencia de machaque con el valor original 50. ¿Continuar?'
         self.assertTrue(upgrade_legacy_machaque(profile))
         self.assertEqual(operation['steps'][5]['parameter'], 'Cantidad')
         self.assertFalse(upgrade_legacy_machaque(profile))

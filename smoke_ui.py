@@ -91,24 +91,27 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
         serial_factory.assert_called_once_with('COM7', baudrate=9600, bytesize=8, parity='E', stopbits=1.0, timeout=0.1, write_timeout=1, xonxoff=False, rtscts=True, dsrdtr=False)
     assert str(gui.settings_btn.cget('state')) == 'disabled'
     assert gui.transport is not None
-    assert gui.confirm_operations.get()
-    sensitive = next(i for i, op in enumerate(gui.current()['operations']) if op['name'] == 'Borrar Telecarga')
-    gui.ops.selection_set(sensitive)
-    with patch('app.messagebox.askyesno', return_value=False) as confirmation, patch.object(gui, 'start_steps') as start:
-        gui.execute()
-        confirmation.assert_called_once()
-        start.assert_not_called()
-    confirm_checkbox = next(widget for widget in descendants(gui)
-                            if isinstance(widget, app.ttk.Checkbutton) and widget.cget('text') == 'Confirmar operaciones sensibles')
-    confirm_checkbox.invoke()
-    assert not gui.confirm_operations.get()
-    assert json.loads(gui.preferences_path.read_text(encoding='utf-8'))['confirm_operations'] is False
-    with patch('app.messagebox.askyesno') as confirmation, patch.object(gui, 'start_steps') as start:
-        gui.execute()
-        confirmation.assert_not_called()
-        start.assert_called_once()
-    confirm_checkbox.invoke()
-    assert json.loads(gui.preferences_path.read_text(encoding='utf-8'))['confirm_operations'] is True
+    assert not any(isinstance(widget, app.ttk.Checkbutton) and widget.cget('text') == 'Confirmar operaciones sensibles'
+                   for widget in descendants(gui))
+    for name in ('Borrar Telecarga', 'Borrar Estadísticas', 'Grabar Título', 'Machaque Título', 'Reset'):
+        index = next(i for i, op in enumerate(gui.current()['operations']) if op['name'] == name)
+        operation = gui.current()['operations'][index]
+        # Previously exported profiles may still contain confirmation metadata.
+        operation['confirm'] = 'Aviso antiguo que ya no debe mostrarse'
+        gui.ops.selection_clear(0, 'end')
+        gui.ops.selection_set(index)
+        with patch('app.messagebox.askyesno') as confirmation, \
+             patch.object(gui, 'ask_parameters', return_value={'Cantidad': '2'}) as parameters, \
+             patch.object(gui, 'start_steps') as start:
+            gui.execute()
+            confirmation.assert_not_called()
+            start.assert_called_once()
+            if name == 'Machaque Título':
+                parameters.assert_called_once()
+                assert {'send': '2', 'delay_ms': 200} in start.call_args.args[1]
+            else:
+                parameters.assert_not_called()
+        operation.pop('confirm')
     gui.ops.selection_clear(0, 'end')
     index = next(i for i, op in enumerate(gui.current()['operations']) if op['name'] == 'Versión telecarga')
     gui.ops.selection_set(index)
@@ -156,6 +159,7 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
     editor.new_machine()
     editor.fields['name'].set('Equipo prueba')
     recorder = editor.record_action()
+    assert not hasattr(recorder, 'confirm')
     recorder.delay.set('350')
     recorder.toggle_recording()
     for keysym, char in [('Return', '\r'), ('O', 'O'), ('0', '0')]:

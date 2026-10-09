@@ -98,8 +98,7 @@ class ActionRecorder(tk.Toplevel):
         form.pack(fill='x', pady=(8, 4))
         self.name = tk.StringVar(value=self.original.get('name', ''))
         self.description = tk.StringVar(value=self.original.get('description', ''))
-        self.confirm = tk.StringVar(value=self.original.get('confirm', ''))
-        for i, (label, variable) in enumerate((('Nombre de la acción', self.name), ('Descripción', self.description), ('Confirmación antes de ejecutar (opcional)', self.confirm))):
+        for i, (label, variable) in enumerate((('Nombre de la acción', self.name), ('Descripción', self.description))):
             ttk.Label(form, text=label, style='Card.TLabel').grid(row=i, column=0, sticky='w', padx=(0, 8), pady=3)
             ttk.Entry(form, textvariable=variable).grid(row=i, column=1, sticky='ew')
         form.columnconfigure(1, weight=1)
@@ -265,10 +264,7 @@ class ActionRecorder(tk.Toplevel):
             messagebox.showerror('Acción incompleta', 'Graba al menos una tecla y asigna un nombre.', parent=self)
             return
         operation = dict(self.original, name=name, description=self.description.get().strip(), steps=copy.deepcopy(self.steps))
-        if self.confirm.get().strip():
-            operation['confirm'] = self.confirm.get().strip()
-        else:
-            operation.pop('confirm', None)
+        operation.pop('confirm', None)
         try:
             self.on_save(operation)
         except ValueError as exc:

@@ -21,8 +21,7 @@ TM App/
 ├── TM App.exe
 └── datos/
     ├── machines.json
-    ├── appearance.json
-    └── preferences.json
+    └── appearance.json
 ```
 
 Los archivos de preferencias se crean al guardar sus ajustes. Para trasladar la
@@ -74,10 +73,8 @@ aplicarlo y conservarlo entre sesiones. **Cancelar** conserva el aspecto anterio
 Las preferencias se guardan en `datos/appearance.json`.
 
 Se incluyen 17 operaciones de comandos, entre ellas **Cálculo PID** para VP1994+;
-la transferencia de firmware
-queda pendiente. Las operaciones de borrado, escritura y reset piden confirmación
-por defecto. **Confirmar operaciones sensibles**, debajo de **Ejecutar operación**,
-permite omitir esos avisos; la elección se guarda para el usuario.
+la transferencia de firmware queda pendiente. Las operaciones se ejecutan
+directamente; las que tienen valores variables piden esos datos antes del envío.
 **Machaque Título** pide la cantidad al ejecutarse, proponiendo 50. Puedes cambiarla
 en cada ejecución; el valor debe contener solo dígitos.
 En las acciones VP1994+ que envían la clave `ABCD`, cada letra se manda por separado
@@ -97,7 +94,7 @@ Desconecta y pulsa **Equipos y acciones**:
    Tab, Esc, Retroceso, Supr y Ctrl+A…Ctrl+Z. Mayúsculas y símbolos ASCII se
    conservan tal como los produce tu teclado. La grabación no envía nada al equipo.
 3. Pulsa **Detener grabación**. Asigna un nombre a la acción y, opcionalmente,
-   una descripción y un mensaje de confirmación antes de ejecutarla.
+   una descripción.
 4. El **Delay por tecla** configura la pausa posterior a las teclas nuevas;
    **Aplicar a todas** cambia todas las pausas. También puedes seleccionar una
    tecla y cambiar solo su pausa, eliminarla o vaciar la grabación.

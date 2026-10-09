@@ -64,8 +64,7 @@
               "send": "0",
               "delay_ms": 0
             }
-          ],
-          "confirm": "Se borrará la telecarga del equipo. ¿Continuar?"
+          ]
         },
         {
           "name": "Borrar Estadísticas",
@@ -171,8 +170,7 @@
               "send": "<ENTER>",
               "delay_ms": 0
             }
-          ],
-          "confirm": "Se borrarán estadísticas del equipo. ¿Continuar?"
+          ]
         },
         {
           "name": "Versión telecarga",
@@ -244,8 +242,7 @@
               "send": "<ENTER>",
               "delay_ms": 0
             }
-          ],
-          "confirm": "Se grabará un título en el equipo. ¿Continuar?"
+          ]
         },
         {
           "name": "Machaque Título",
@@ -281,8 +278,7 @@
               "send": "<ENTER>",
               "delay_ms": 0
             }
-          ],
-          "confirm": "Se ejecutará el machaque de título. ¿Continuar?"
+          ]
         },
         {
           "name": "Estado fotocélulas",
@@ -508,8 +504,7 @@
               "send": "<ENTER>",
               "delay_ms": 200
             }
-          ],
-          "confirm": "Se enviará el reset al equipo. ¿Continuar?"
+          ]
         },
         {
           "name": "Cálculo PID",

@@ -9,7 +9,6 @@
 - Creación, edición y eliminación de equipos y acciones.
 - Grabación de macros con pausas configurables y valores variables.
 - Ejecución de operaciones mediante botón, doble clic o Intro.
-- Confirmaciones de operaciones configurables por usuario.
 - Importación y exportación selectiva de perfiles y comandos, con elección del
   equipo de destino y copia de seguridad antes de importar.
 - Icono de TM App en el ejecutable, la barra de tareas y la interfaz.

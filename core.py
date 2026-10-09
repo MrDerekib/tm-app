@@ -140,8 +140,6 @@ def upgrade_legacy_machaque(profiles):
             if op['steps'] != [{'send': key, 'delay_ms': delay} for key, delay in zip(original, delays)]:
                 return False
             op['steps'][5] = {'parameter': 'Cantidad', 'default': '50', 'kind': 'number', 'delay_ms': 200}
-            if op.get('confirm') == 'Se enviará la secuencia de machaque con el valor original 50. ¿Continuar?':
-                op['confirm'] = 'Se ejecutará el machaque de título. ¿Continuar?'
             return True
     return False
 
