@@ -71,7 +71,8 @@ puntos, color de texto y color de fondo con vista previa. Pulsa **Guardar** para
 aplicarlo y conservarlo entre sesiones. **Cancelar** conserva el aspecto anterior.
 Las preferencias se guardan en `datos/appearance.json`.
 
-Se incluyen las 16 operaciones existentes de comandos; la transferencia de firmware
+Se incluyen 17 operaciones de comandos, entre ellas **Cálculo PID** para VP1994+;
+la transferencia de firmware
 queda pendiente. Las operaciones de borrado, escritura y reset piden confirmación
 por defecto. **Confirmar operaciones sensibles**, debajo de **Ejecutar operación**,
 permite omitir esos avisos; la elección se guarda para el usuario.

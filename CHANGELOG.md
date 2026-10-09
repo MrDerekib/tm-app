@@ -3,6 +3,7 @@
 ## 1.0.0
 
 - Terminal RS-232 con configuración editable y perfil inicial VP1994+.
+- Cálculo PID incluido entre las operaciones del perfil inicial VP1994+.
 - Consola con actualización de lecturas continuas y aspecto personalizable.
 - Envío manual de comandos carácter por carácter y envío de Intro.
 - Creación, edición y eliminación de equipos y acciones.

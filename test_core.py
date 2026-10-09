@@ -27,7 +27,7 @@ class Tests(unittest.TestCase):
         merged, conflicts = merge_selected_profiles(local, shared, selected, {'VP 1994 Plus': 'VP1994+'})
         self.assertEqual([m['name'] for m in merged['machines']], ['VP1994+'])
         self.assertEqual(merged['machines'][0]['connection'], local['machines'][0]['connection'])
-        self.assertEqual(len(merged['machines'][0]['operations']), 16)
+        self.assertEqual(len(merged['machines'][0]['operations']), len(local['machines'][0]['operations']))
         self.assertEqual(merged['machines'][0]['operations'][0]['steps'], [{'send': 'X', 'delay_ms': 150}])
         self.assertEqual(conflicts['operations'], [('VP1994+', 'Borrar Telecarga')])
         self.assertEqual(shared['machines'][0]['name'], 'VP 1994 Plus')
@@ -69,7 +69,7 @@ class Tests(unittest.TestCase):
         targets = {'Alias uno': 'VP1994+', 'Alias dos': 'VP1994+'}
         selected = {'Alias uno': {'Acción nueva uno'}, 'Alias dos': {'Acción nueva dos'}}
         merged, conflicts = merge_selected_profiles(local, shared, selected, targets)
-        self.assertEqual(len(merged['machines'][0]['operations']), 18)
+        self.assertEqual(len(merged['machines'][0]['operations']), len(local['machines'][0]['operations']) + 2)
         self.assertEqual(conflicts, {'machines': [], 'operations': []})
         selected['Alias uno'] = None
         with self.assertRaises(ValueError):
@@ -86,7 +86,7 @@ class Tests(unittest.TestCase):
         merged, conflicts = merge_selected_profiles(local, exported, selection)
         self.assertEqual(conflicts, {'machines': [], 'operations': [('VP1994+', 'Borrar Telecarga')]})
         self.assertEqual(merged['machines'][0]['connection']['baudrate'], 2400)
-        self.assertEqual(len(merged['machines'][0]['operations']), 16)
+        self.assertEqual(len(merged['machines'][0]['operations']), len(local['machines'][0]['operations']))
         self.assertEqual(merged['machines'][0]['operations'][0]['steps'], [{'send': 'X', 'delay_ms': 150}])
         self.assertNotEqual(local['machines'][0]['operations'][0]['steps'], merged['machines'][0]['operations'][0]['steps'])
 
@@ -188,7 +188,9 @@ class Tests(unittest.TestCase):
     def test_initial_sequences(self):
         profile = read_profile('machines.json')
         ops = {op['name']: op for op in profile['machines'][0]['operations']}
-        self.assertEqual(len(ops), 16)
+        self.assertEqual(len(ops), 17)
+        self.assertEqual([s['send'] for s in ops['Cálculo PID']['steps']], ['S', '3', '<ENTER>'])
+        self.assertEqual([s['delay_ms'] for s in ops['Cálculo PID']['steps']], [200, 200, 200])
         self.assertEqual([s['send'] for s in ops['Test Relé']['steps']], ['<ENTER>', 'O', '9'])
         self.assertEqual([s['send'] for s in ops['Reset']['steps']], ['<ENTER>', 'R', 'A', 'B', 'C', 'D', '<ENTER>'])
         self.assertEqual([s['send'] for s in ops['Leer posición Switch']['steps']], ['<ENTER>', 'O', '0'])

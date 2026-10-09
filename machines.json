@@ -510,6 +510,24 @@
             }
           ],
           "confirm": "Se enviará el reset al equipo. ¿Continuar?"
+        },
+        {
+          "name": "Cálculo PID",
+          "description": "",
+          "steps": [
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
         }
       ]
     }

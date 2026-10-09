@@ -169,7 +169,7 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
     editor.save()
     assert gui.machine.get() == 'Equipo prueba'
     persisted = read_profile(gui.profile_path)
-    assert len(persisted['machines'][0]['operations']) == 16
+    assert len(persisted['machines'][0]['operations']) == len(original['machines'][0]['operations'])
     operation = persisted['machines'][1]['operations'][0]
     assert operation['name'] == 'Leer switch de prueba'
     assert [s['send'] for s in operation['steps']] == ['<ENTER>', 'O', '0']
@@ -190,7 +190,7 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
     with patch('editor.messagebox.askyesno', return_value=True):
         editor.delete_machine()
     assert editor.machine()['name'] == 'VP1994+'
-    assert editor.actions.size() == 16
+    assert editor.actions.size() == len(original['machines'][0]['operations'])
     assert len(read_profile(gui.profile_path)['machines']) == 2
     with patch('editor.messagebox.showinfo') as info, patch('editor.messagebox.askyesno') as confirmation:
         editor.delete_machine()
