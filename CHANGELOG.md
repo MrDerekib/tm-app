@@ -1,5 +1,11 @@
 # Cambios de TM App
 
+## Próxima versión
+
+- Corregida la edición de pausas de macros: «Aplicar a todas» conserva la
+  selección y «Cambiar pausa seleccionada» actualiza el paso sin perderla.
+- Campos de pausa identificados e indicación cuando falta seleccionar un paso.
+
 ## 1.0.0
 
 - Terminal RS-232 con configuración editable y perfil inicial VP1994+.

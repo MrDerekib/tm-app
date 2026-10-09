@@ -95,9 +95,12 @@ Desconecta y pulsa **Equipos y acciones**:
    conservan tal como los produce tu teclado. La grabación no envía nada al equipo.
 3. Pulsa **Detener grabación**. Asigna un nombre a la acción y, opcionalmente,
    una descripción.
-4. El **Delay por tecla** configura la pausa posterior a las teclas nuevas;
-   **Aplicar a todas** cambia todas las pausas. También puedes seleccionar una
-   tecla y cambiar solo su pausa, eliminarla o vaciar la grabación.
+4. **Pausa de nuevas teclas (ms)** configura la pausa de las teclas que grabes;
+   **Aplicar a todas** cambia las pausas de todos los pasos existentes.
+   Para cambiar solo una, selecciona el paso en la tabla, escribe el valor en
+   **Pausa del paso (ms)** y pulsa **Cambiar pausa seleccionada**. La tabla muestra
+   el valor actualizado y conserva la selección. También puedes eliminar pasos
+   o vaciar la grabación.
    Los tiempos reales que tardes en escribir no se graban: se usa el delay elegido.
    Para pedir un dato al ejecutar cualquier macro, usa **Insertar valor variable**:
    indica el nombre de la pregunta, un valor inicial y si será número o texto.

@@ -166,8 +166,27 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
         recorder.capture_key(SimpleNamespace(keysym=keysym, char=char, state=0))
     recorder.toggle_recording()
     recorder.table.selection_set('1')
+    gui.update()
+    selected_delay_button = next(widget for widget in descendants(recorder)
+                                 if isinstance(widget, app.ttk.Button) and widget.cget('text') == 'Cambiar pausa seleccionada')
+    recorder.delay.set('350')
+    next(widget for widget in descendants(recorder)
+         if isinstance(widget, app.ttk.Button) and widget.cget('text') == 'Aplicar a todas').invoke()
+    gui.update()
+    assert recorder.table.selection() == ('1',)
+    assert recorder.step_delay.get() == '350'
     recorder.step_delay.set('150')
-    recorder.apply_selected()
+    selected_delay_button.invoke()
+    gui.update()
+    assert recorder.table.selection() == ('1',)
+    assert int(recorder.table.set('1', 'delay')) == 150
+    assert [step['delay_ms'] for step in recorder.steps] == [350, 150, 350]
+    recorder.table.selection_remove('1')
+    gui.update()
+    recorder.step_delay.set('900')
+    selected_delay_button.invoke()
+    assert 'Selecciona un paso' in recorder.state_label.cget('text')
+    assert [step['delay_ms'] for step in recorder.steps] == [350, 150, 350]
     recorder.name.set('Leer switch de prueba')
     recorder.save()
     editor.save()

@@ -57,7 +57,7 @@ class ActionRecorder(tk.Toplevel):
         bar.pack(fill='x', pady=8)
         self.record_btn = ttk.Button(bar, text='Grabar', command=self.toggle_recording, style='Primary.TButton')
         self.record_btn.pack(side='left')
-        ttk.Label(bar, text='Delay por tecla (ms)').pack(side='left', padx=(15, 6))
+        ttk.Label(bar, text='Pausa de nuevas teclas (ms)').pack(side='left', padx=(15, 6))
         self.delay = tk.StringVar(value='200')
         ttk.Spinbox(bar, from_=0, to=60000, increment=50, textvariable=self.delay, width=8).pack(side='left')
         ttk.Button(bar, text='Aplicar a todas', command=self.apply_all).pack(side='left', padx=8)
@@ -85,6 +85,7 @@ class ActionRecorder(tk.Toplevel):
         self.table.bind('<<TreeviewSelect>>', self.selected_step)
         row = ttk.Frame(root)
         row.pack(fill='x', pady=8)
+        ttk.Label(row, text='Pausa del paso (ms)').pack(side='left', padx=(0, 6))
         self.step_delay = tk.StringVar(value='200')
         ttk.Spinbox(row, from_=0, to=60000, increment=50, textvariable=self.step_delay, width=8).pack(side='left')
         ttk.Button(row, text='Cambiar pausa seleccionada', command=self.apply_selected).pack(side='left', padx=6)
@@ -230,20 +231,25 @@ class ActionRecorder(tk.Toplevel):
     def apply_selected(self):
         selection = self.table.selection()
         if not selection:
+            self.state_label.configure(text='Selecciona un paso de la tabla para cambiar su pausa.')
             return
         try:
-            self.steps[int(selection[0])]['delay_ms'] = delay_value(self.step_delay.get())
-            self.refresh()
-            self.table.selection_set(selection[0])
+            delay = delay_value(self.step_delay.get())
+            index = int(selection[0])
+            self.steps[index]['delay_ms'] = delay
+            self.table.set(selection[0], 'delay', delay)
+            self.state_label.configure(text=f'Paso {index + 1}: pausa actualizada a {delay} ms.')
         except ValueError as exc:
             messagebox.showerror('Delay inválido', str(exc), parent=self)
 
     def apply_all(self):
         try:
             delay = delay_value(self.delay.get())
-            for step in self.steps:
+            for index, step in enumerate(self.steps):
                 step['delay_ms'] = delay
-            self.refresh()
+                self.table.set(str(index), 'delay', delay)
+            self.selected_step()
+            self.state_label.configure(text=f'Pausa de todos los pasos actualizada a {delay} ms.')
         except ValueError as exc:
             messagebox.showerror('Delay inválido', str(exc), parent=self)
 
