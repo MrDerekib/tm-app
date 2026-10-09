@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+build/
+dist/
+*.py[cod]
+*.log
+*.tmp
+.env
+.env.*
+/TM App-*.txt
+/equipo-*.txt
+/appearance.json
+/preferences.json
+/machines.backup.json
+
+# Historical artwork not used by the current application.
+/assets/indra-current-logo.png
+/assets/tm-device-icon-v2.png
+/assets/tm-device-icon-v3.png
+/assets/tm-device-icon.svg

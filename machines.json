@@ -1,0 +1,517 @@
+{
+  "machines": [
+    {
+      "name": "VP1994+",
+      "connection": {
+        "port": "COM1",
+        "baudrate": 2400,
+        "bytesize": 8,
+        "parity": "N",
+        "stopbits": 1,
+        "flow": "none",
+        "enter": "\r"
+      },
+      "operations": [
+        {
+          "name": "Borrar Telecarga",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 300
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "A",
+              "delay_ms": 200
+            },
+            {
+              "send": "B",
+              "delay_ms": 200
+            },
+            {
+              "send": "C",
+              "delay_ms": 200
+            },
+            {
+              "send": "D",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 0
+            }
+          ],
+          "confirm": "Se borrará la telecarga del equipo. ¿Continuar?"
+        },
+        {
+          "name": "Borrar Estadísticas",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "E",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "A",
+              "delay_ms": 200
+            },
+            {
+              "send": "B",
+              "delay_ms": 200
+            },
+            {
+              "send": "C",
+              "delay_ms": 200
+            },
+            {
+              "send": "D",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "E",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "A",
+              "delay_ms": 200
+            },
+            {
+              "send": "B",
+              "delay_ms": 200
+            },
+            {
+              "send": "C",
+              "delay_ms": 200
+            },
+            {
+              "send": "D",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "E",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "A",
+              "delay_ms": 200
+            },
+            {
+              "send": "B",
+              "delay_ms": 200
+            },
+            {
+              "send": "C",
+              "delay_ms": 200
+            },
+            {
+              "send": "D",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 0
+            }
+          ],
+          "confirm": "Se borrarán estadísticas del equipo. ¿Continuar?"
+        },
+        {
+          "name": "Versión telecarga",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Leer errores",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "V",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 0
+            }
+          ]
+        },
+        {
+          "name": "Leer posición Switch",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Grabar Título",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "G",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 0
+            }
+          ],
+          "confirm": "Se grabará un título en el equipo. ¿Continuar?"
+        },
+        {
+          "name": "Machaque Título",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "M",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Cantidad",
+              "default": "50",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 0
+            }
+          ],
+          "confirm": "Se ejecutará el machaque de título. ¿Continuar?"
+        },
+        {
+          "name": "Estado fotocélulas",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 200
+            },
+            {
+              "send": "4",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test I/O Salida",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 300
+            },
+            {
+              "send": "1",
+              "delay_ms": 300
+            },
+            {
+              "send": "1",
+              "delay_ms": 500
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1500
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1500
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1500
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 0
+            }
+          ]
+        },
+        {
+          "name": "Test I/O Entrada",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 0
+            }
+          ]
+        },
+        {
+          "name": "Test Impresión",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "I",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test Motor cinta",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 300
+            },
+            {
+              "send": "6",
+              "delay_ms": 1000
+            },
+            {
+              "send": "O",
+              "delay_ms": 300
+            },
+            {
+              "send": "6",
+              "delay_ms": 1000
+            },
+            {
+              "send": "O",
+              "delay_ms": 300
+            },
+            {
+              "send": "6",
+              "delay_ms": 1000
+            },
+            {
+              "send": "O",
+              "delay_ms": 300
+            },
+            {
+              "send": "6",
+              "delay_ms": 0
+            }
+          ]
+        },
+        {
+          "name": "Test Fin de Carro",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 200
+            },
+            {
+              "send": "5",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test Relé",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 200
+            },
+            {
+              "send": "9",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test Zumbador",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "O",
+              "delay_ms": 200
+            },
+            {
+              "send": "7",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Reset",
+          "description": "Secuencia migrada del script original; resultado pendiente de validación en equipo.",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 300
+            },
+            {
+              "send": "R",
+              "delay_ms": 200
+            },
+            {
+              "send": "A",
+              "delay_ms": 200
+            },
+            {
+              "send": "B",
+              "delay_ms": 200
+            },
+            {
+              "send": "C",
+              "delay_ms": 200
+            },
+            {
+              "send": "D",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ],
+          "confirm": "Se enviará el reset al equipo. ¿Continuar?"
+        }
+      ]
+    }
+  ]
+}
