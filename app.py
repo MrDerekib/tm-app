@@ -1,6 +1,5 @@
 import json
 import copy
-import os
 import queue
 import sys
 import threading
@@ -16,13 +15,10 @@ from core import read_profile, validate, select_profiles, merge_selected_profile
 from editor import ProfileEditor
 from profile_picker import ProfilePicker
 from ui_theme import UI
-from storage import migrate_user_data
+from storage import portable_data_directory
 
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
-DATA_ROOT = Path(os.environ.get('LOCALAPPDATA', str(Path.home())))
-DATA = DATA_ROOT / 'TM App'
-# Compatibility with previous versions only; new data is stored under TM App.
-LEGACY_DATA = DATA_ROOT / 'EquipoTools'
+DATA = portable_data_directory(__file__, sys.executable, frozen=getattr(sys, 'frozen', False))
 
 class App(tk.Tk):
     def __init__(self):
@@ -69,7 +65,7 @@ class App(tk.Tk):
         self.history = []
         self.terminal_text = TerminalText()
         self.session = 0
-        migrate_user_data(DATA, LEGACY_DATA)
+        DATA.mkdir(parents=True, exist_ok=True)
         self.preferences_path = DATA / 'preferences.json'
         confirm_operations = True
         try:

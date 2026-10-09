@@ -12,6 +12,7 @@
 - Importación y exportación selectiva de perfiles y comandos, con elección del
   equipo de destino y copia de seguridad antes de importar.
 - Icono de TM App en el ejecutable, la barra de tareas y la interfaz.
-- Configuración local conservada entre versiones.
+- Datos portables en una carpeta `datos` junto al exe, conservados al actualizar
+  el ejecutable y trasladables junto con la app.
 
 La transferencia de firmware por RS-485 queda pendiente.

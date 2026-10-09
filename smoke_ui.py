@@ -16,8 +16,7 @@ class TestTransport(Simulator):
 
 
 with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
-    app.DATA = Path(temp)
-    app.LEGACY_DATA = Path(temp) / 'previous-install'
+    app.DATA = Path(temp) / 'datos'
     gui = app.App()
     gui.withdraw()
     assert gui.handle_enter(SimpleNamespace(widget='.!combobox.popdown')) is None

@@ -2,34 +2,33 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from storage import migrate_user_data
+from storage import portable_data_directory
 
 
 class StorageTests(unittest.TestCase):
-    def test_migration_preserves_user_data_and_originals(self):
+    def test_source_run_uses_app_folder_instead_of_python_folder(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as directory:
-            root = Path(directory)
-            legacy, destination = root / 'previous', root / 'TM App'
-            legacy.mkdir()
-            files = ('machines.json', 'machines.backup.json', 'appearance.json', 'preferences.json')
-            for name in files:
-                (legacy / name).write_text('{"saved": "' + name + '"}', encoding='utf-8')
-            (legacy / 'unrelated.txt').write_text('unrelated', encoding='utf-8')
-            migrate_user_data(destination, legacy)
-            for name in files:
-                self.assertEqual((destination / name).read_bytes(), (legacy / name).read_bytes())
-            self.assertEqual({path.name for path in destination.iterdir()}, set(files))
-            (destination / 'machines.json').write_text('{"newer": true}', encoding='utf-8')
-            migrate_user_data(destination, legacy)
-            self.assertEqual((destination / 'machines.json').read_text(encoding='utf-8'), '{"newer": true}')
+            root = Path(directory).resolve()
+            data = portable_data_directory(root / 'project' / 'app.py', root / 'python' / 'python.exe')
+            self.assertEqual(data, root / 'project' / 'datos')
+            self.assertFalse(data.exists())
 
-    def test_fresh_install_does_not_create_default_profiles_during_migration(self):
+    def test_executable_run_uses_exe_folder_instead_of_extracted_resources(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as directory:
-            root = Path(directory)
-            destination = root / 'TM App'
-            migrate_user_data(destination, root / 'missing')
-            self.assertTrue(destination.is_dir())
-            self.assertEqual(list(destination.iterdir()), [])
+            root = Path(directory).resolve()
+            data = portable_data_directory(
+                root / '_MEI123' / 'app.py', root / 'portable' / 'TM App.exe', frozen=True)
+            self.assertEqual(data, root / 'portable' / 'datos')
+            self.assertFalse(data.exists())
+
+    def test_moving_executable_changes_data_location(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as directory:
+            root = Path(directory).resolve()
+            source = root / '_MEI123' / 'app.py'
+            first = portable_data_directory(source, root / 'first' / 'TM App.exe', frozen=True)
+            second = portable_data_directory(source, root / 'second' / 'TM App.exe', frozen=True)
+            self.assertEqual(first, root / 'first' / 'datos')
+            self.assertEqual(second, root / 'second' / 'datos')
 
 
 if __name__ == '__main__':

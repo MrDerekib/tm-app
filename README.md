@@ -4,16 +4,28 @@ App Windows independiente para comandos RS-232. Perfil inicial VP1994+:
 COM1, 2400 baudios, 8N1, sin control de flujo.
 El icono compacto representa el TM físico en vertical. El mismo diseño se usa
 en el ejecutable, la barra de tareas, la barra de título y la cabecera.
-Los datos se guardan en `%LOCALAPPDATA%/TM App`. Al abrir por primera vez esta
-versión se copian los perfiles y preferencias de versiones anteriores, sin
-sobrescribir los que ya existan en la carpeta nueva ni eliminar los originales.
+Los datos se guardan en una carpeta `datos` junto a `TM App.exe` (o junto a
+`app.py` al ejecutar desde Python). No se importan datos de carpetas del usuario
+de Windows. En el primer arranque se crea la carpeta con el perfil inicial incluido.
 En Windows, el mismo icono se usa en la barra de tareas al ejecutar `app.py`.
 
 ## Ejecutable para Windows
 
 Cuando se publique una versión, descarga `TM App.exe` desde **Releases** del
-repositorio y ejecútalo. No necesita instalador ni Python. Los perfiles y las
-preferencias se conservan en la carpeta de datos del usuario.
+repositorio y ejecútalo. No necesita instalador ni Python. La estructura portable es:
+
+```text
+TM App/
+├── TM App.exe
+└── datos/
+    ├── machines.json
+    ├── appearance.json
+    └── preferences.json
+```
+
+Los archivos de preferencias se crean al guardar sus ajustes. Para trasladar la
+app con sus configuraciones, copia toda la carpeta. Para actualizar, sustituye
+solo el exe y conserva `datos`. Usa una carpeta en la que puedas escribir.
 
 ## Uso
 
@@ -57,7 +69,7 @@ preferencias se conservan en la carpeta de datos del usuario.
 **Aspecto de la consola** permite elegir tipografía instalada, tamaño de 6 a 48
 puntos, color de texto y color de fondo con vista previa. Pulsa **Guardar** para
 aplicarlo y conservarlo entre sesiones. **Cancelar** conserva el aspecto anterior.
-Las preferencias se guardan en `%LOCALAPPDATA%/TM App/appearance.json`.
+Las preferencias se guardan en `datos/appearance.json`.
 
 Se incluyen las 16 operaciones existentes de comandos; la transferencia de firmware
 queda pendiente. Las operaciones de borrado, escritura y reset piden confirmación
@@ -102,7 +114,7 @@ No se añade Intro automáticamente al comienzo ni al final de una grabación.
 Solo se capturan las teclas dentro del recuadro; no hay captura global del teclado.
 No se admiten pegado, flechas, teclas de función ni secuencias ANSI.
 
-Los perfiles se guardan en `%LOCALAPPDATA%/TM App/machines.json` y se
+Los perfiles se guardan en `datos/machines.json` y se
 conservan los que ya tengas. AutoHotkey no es una dependencia del proyecto:
 las operaciones iniciales son datos y no existe un flujo de importación de scripts.
 
@@ -132,7 +144,7 @@ Para sustituir un equipo completo, selecciona un único equipo de origen para es
 
 La app pide confirmación antes de cualquier sustitución. Antes de importar guarda
 una copia de los perfiles locales en
-`%LOCALAPPDATA%/TM App/machines.backup.json`.
+`datos/machines.backup.json`.
 
 Si cambias la conexión en la pantalla principal, pulsa **Guardar para este equipo**
 antes de exportar para incluir los ajustes nuevos. El archivo compartido incluye
@@ -168,6 +180,6 @@ Desde la carpeta del proyecto, con PyInstaller instalado en `.venv`:
 Genera `dist/TM App.exe`, un ejecutable independiente sin instalador ni consola.
 Incluye el perfil inicial, los iconos de la interfaz y el recurso de icono del
 ejecutable, además de la versión 1.0.0 en las propiedades de Windows.
-Los perfiles y las preferencias del usuario permanecen en `%LOCALAPPDATA%/TM App`.
+Los perfiles y las preferencias permanecen en la carpeta `datos` junto al exe.
 Consulta [RELEASING.md](RELEASING.md) para publicar el ejecutable en GitHub y
 [CHANGELOG.md](CHANGELOG.md) para las notas de versión.

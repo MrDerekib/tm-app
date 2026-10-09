@@ -12,6 +12,7 @@ dist/
 /appearance.json
 /preferences.json
 /machines.backup.json
+/datos/
 
 # Historical artwork not used by the current application.
 /assets/indra-current-logo.png
