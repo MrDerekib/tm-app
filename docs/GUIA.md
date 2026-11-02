@@ -191,6 +191,26 @@ en un TM físico con estos resultados:
 | ↓ | `B8` |
 | → | `B6` |
 
+## Nuevas versiones
+
+TM App muestra su versión en la barra de título y en **Ayuda → Acerca de TM App**.
+Al iniciar comprueba en segundo plano si hay una versión estable más reciente
+en GitHub. Las consultas automáticas se limitan a una cada 24 horas; durante ese
+tiempo se reutiliza la última consulta, guardada en `datos/updates.json`.
+
+Si hay una nueva versión, aparece un botón **Nueva versión…** en la cabecera que
+abre su página de descarga. **Ayuda → Buscar actualizaciones** permite forzar una
+consulta en cualquier momento. No necesitas iniciar sesión en GitHub.
+
+Si no hay conexión a Internet, la comprobación automática no muestra avisos.
+La app sigue funcionando y la conexión serie continúa de forma independiente.
+La comprobación manual informa si no puede consultar GitHub.
+
+Para actualizar, cierra la app y sustituye solo `TM App.exe`, conservando `datos`.
+Los perfiles existentes se mantienen: para incorporar perfiles nuevos incluidos
+en una release, descarga su archivo `machines.json` y usa **Importar perfiles**,
+seleccionando únicamente los equipos o comandos que quieras añadir.
+
 ## Desarrollo
 
 Desde la carpeta del proyecto, con Python para Windows instalado:
@@ -210,7 +230,7 @@ Se ejecuta el código fuente; no se generan builds salvo petición explícita.
 El firmware por RS-485, su migración a Windows 11 y la interpretación de
 respuestas para evaluar pruebas siguen pendientes.
 
-## Compilación manual de v1.0.0
+## Compilación manual de v1.1.0
 
 Desde la carpeta del proyecto, con PyInstaller instalado en `.venv`:
 
@@ -220,7 +240,7 @@ Desde la carpeta del proyecto, con PyInstaller instalado en `.venv`:
 
 Genera `dist/TM App.exe`, un ejecutable independiente sin instalador ni consola.
 Incluye el perfil inicial, los iconos de la interfaz y el recurso de icono del
-ejecutable, además de la versión 1.0.0 en las propiedades de Windows.
+ejecutable, además de la versión 1.1.0 en las propiedades de Windows.
 Los perfiles y las preferencias permanecen en la carpeta `datos` junto al exe.
 Consulta [RELEASING.md](../RELEASING.md) para publicar el ejecutable en GitHub y
 [CHANGELOG.md](../CHANGELOG.md) para las notas de versión.

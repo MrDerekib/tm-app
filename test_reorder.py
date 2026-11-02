@@ -18,7 +18,7 @@ class ReorderTests(unittest.TestCase):
         self.data = patch.object(app, 'DATA', Path(self.directory.name) / 'datos')
         self.data.start()
         self.addCleanup(self.data.stop)
-        self.gui = app.App()
+        self.gui = app.App(check_updates=False)
         self.addCleanup(self.destroy_gui, self.gui)
         self.gui.geometry('1120x740+80+80')
         profiles = copy.deepcopy(self.gui.profiles)
@@ -135,7 +135,7 @@ class ReorderTests(unittest.TestCase):
         editor.save()
         self.assertEqual(self.gui.current()['operations'], expected)
         self.assertEqual(read_profile(self.gui.profile_path)['machines'][1], self.original['machines'][1])
-        reopened = app.App()
+        reopened = app.App(check_updates=False)
         try:
             reopened.withdraw()
             reopened.update()

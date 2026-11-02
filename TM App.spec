@@ -1,5 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-# TM App v1.0.0, standalone Windows executable.
+# TM App, standalone Windows executable.
 
 
 a = Analysis(

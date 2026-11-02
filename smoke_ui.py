@@ -17,7 +17,7 @@ class TestTransport(Simulator):
 
 with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
     app.DATA = Path(temp) / 'datos'
-    gui = app.App()
+    gui = app.App(check_updates=False)
     # Keep import, creation and deletion scenarios independent of bundled additions.
     gui.store_profiles({'machines': [copy.deepcopy(gui.current())]}, gui.machine.get())
     gui.withdraw()
@@ -231,7 +231,7 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
     assert gui.machine.get() == 'VP1994+'
     assert len(read_profile(gui.profile_path)['machines']) == 1
     gui.close_app()
-    reopened = app.App()
+    reopened = app.App(check_updates=False)
     reopened.withdraw()
     assert reopened.appearance['size'] == 16
     assert [m['name'] for m in reopened.profiles['machines']] == ['VP1994+']

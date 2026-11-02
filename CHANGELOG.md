@@ -1,7 +1,9 @@
 # Cambios de TM App
 
-## Próxima versión
+## 1.1.0 — 2026-11-02
 
+- Detección de nuevas versiones estables en GitHub, con comprobación automática
+  al iniciar, consulta manual desde Ayuda y enlace a la descarga.
 - Modo de prueba del TM sin display, con las 20 teclas, contadores y registro
   hexadecimal. Solo recibe datos; códigos de teclas verificados en un TM físico.
 - Perfiles incluidos para Procesador DMX (30 operaciones) y Procesador MVE

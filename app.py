@@ -4,6 +4,7 @@ import queue
 import sys
 import threading
 import time
+import webbrowser
 from datetime import datetime
 from pathlib import Path
 import tkinter as tk
@@ -18,12 +19,14 @@ from ui_theme import UI
 from storage import portable_data_directory
 from reorder import ListboxReorder
 from tm_test import TMTestWindow
+from app_version import APP_VERSION
+from updates import latest_release, UpdateError, RELEASES_URL
 
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
 DATA = portable_data_directory(__file__, sys.executable, frozen=getattr(sys, 'frozen', False))
 
 class App(tk.Tk):
-    def __init__(self):
+    def __init__(self, *, check_updates=True):
         if sys.platform == 'win32':
             # Give this source-run Tk app its own Windows taskbar identity,
             # separate from the Python interpreter that launches it.
@@ -33,7 +36,7 @@ class App(tk.Tk):
             shell32.SetCurrentProcessExplicitAppUserModelID.restype = ctypes.c_long
             shell32.SetCurrentProcessExplicitAppUserModelID('Indra.TMApp.TerminalMantenimiento')
         super().__init__()
-        self.title('TM App · Terminal de Mantenimiento')
+        self.title(f'TM App · Terminal de Mantenimiento · v{APP_VERSION}')
         icon_path = BASE / 'assets' / 'tm-device-icon-small.png'
         header_icon_path = BASE / 'assets' / 'tm-device-icon-header.png'
         try:
@@ -64,6 +67,10 @@ class App(tk.Tk):
         self.cancel = threading.Event()
         self.reader_stop = threading.Event()
         self.events = queue.Queue()
+        self.update_results = queue.Queue()
+        self.update_in_progress = False
+        self.available_release = None
+        self.startup_update_job = None
         self.history = []
         self.terminal_text = TerminalText()
         self.session = 0
@@ -115,6 +122,8 @@ class App(tk.Tk):
         self.bind_all('<KP_Enter>', self.handle_enter, add='+')
         self.protocol('WM_DELETE_WINDOW', self.close_app)
         self.after(60, self.poll)
+        if check_updates:
+            self.startup_update_job = self.after(1500, self.check_for_updates)
 
     def setup_styles(self):
         style = ttk.Style(self)
@@ -173,6 +182,7 @@ class App(tk.Tk):
         root = ttk.Frame(self, padding=(16, 14))
         root.pack(fill='both', expand=True)
         header = ttk.Frame(root, style='Card.TFrame', padding=(14, 10))
+        self.header = header
         header.pack(fill='x', pady=(0, 10))
         if self.icon_header is not None:
             ttk.Label(header, image=self.icon_header, style='Card.TLabel').pack(side='left', padx=(0, 12))
@@ -181,9 +191,21 @@ class App(tk.Tk):
         title = ttk.Frame(header, style='Card.TFrame')
         title.pack(side='left')
         ttk.Label(title, text='TM App', style='Title.TLabel').pack(anchor='w')
-        ttk.Label(title, text='Terminal de Mantenimiento  ·  RS-232', style='Subtitle.TLabel').pack(anchor='w')
+        ttk.Label(title, text=f'Terminal de Mantenimiento  ·  RS-232  ·  v{APP_VERSION}', style='Subtitle.TLabel').pack(anchor='w')
+        self.help_btn = ttk.Menubutton(header, text='Ayuda')
+        self.help_btn.pack(side='right', padx=(8, 0))
+        self.help_menu = tk.Menu(self.help_btn, tearoff=False)
+        self.help_menu.add_command(label='Buscar actualizaciones…', command=lambda: self.check_for_updates(manual=True))
+        self.help_menu.add_command(label='Página de versiones', command=lambda: webbrowser.open(RELEASES_URL))
+        self.help_menu.add_separator()
+        self.help_menu.add_command(label='Acerca de TM App', command=lambda: messagebox.showinfo(
+            'TM App', f'TM App {APP_VERSION}\nTerminal de Mantenimiento', parent=self))
+        self.help_btn.configure(menu=self.help_menu)
         self.tm_test_btn = ttk.Button(header, text='Probar TM sin display', command=self.open_tm_test)
         self.tm_test_btn.pack(side='right')
+        self.update_banner = ttk.Frame(header, style='Card.TFrame')
+        self.update_button = ttk.Button(self.update_banner, command=self.open_update_page, style='Primary.TButton')
+        self.update_button.pack()
         connection_card = ttk.Frame(root, style='Card.TFrame', padding=(14, 10))
         connection_card.pack(fill='x', pady=(0, 10))
         bar = ttk.Frame(connection_card, style='Card.TFrame')
@@ -228,7 +250,7 @@ class App(tk.Tk):
         self.ops = tk.Listbox(operations_frame, font=('Segoe UI', 10), activestyle='none', exportselection=False,
                               bg=UI['surface_alt'], fg=UI['text'], selectbackground=UI['accent'],
                               selectforeground=UI['surface'], relief='flat', borderwidth=0,
-                              highlightthickness=0, height=8)
+                              highlightthickness=0, height=1)
         operations_scroll = ttk.Scrollbar(operations_frame, command=self.ops.yview)
         self.ops.configure(yscrollcommand=operations_scroll.set)
         operations_scroll.pack(side='right', fill='y')
@@ -250,7 +272,7 @@ class App(tk.Tk):
         ttk.Label(right, text='Respuesta del equipo', style='Section.TLabel').pack(anchor='w')
         frame = ttk.Frame(right, style='Border.TFrame', padding=1)
         frame.pack(fill='both', expand=True, pady=8)
-        self.console = tk.Text(frame, width=1, height=8, bg='#152132', fg='#dce7f4', insertbackground='white',
+        self.console = tk.Text(frame, width=1, height=1, bg='#152132', fg='#dce7f4', insertbackground='white',
                                font=('Consolas', 10), wrap='word', state='disabled', relief='flat', borderwidth=0, padx=8, pady=7)
         scroll = ttk.Scrollbar(frame, command=self.console.yview)
         self.console.configure(yscrollcommand=scroll.set)
@@ -737,6 +759,7 @@ class App(tk.Tk):
         self.cancel.set()
 
     def poll(self):
+        self.poll_updates()
         for _ in range(200):
             try:
                 session, kind, text = self.events.get_nowait()
@@ -755,6 +778,51 @@ class App(tk.Tk):
             elif kind == 'ERROR':
                 self.disconnect()
         self.after(60, self.poll)
+
+    def check_for_updates(self, manual=False):
+        if self.update_in_progress:
+            return
+        if self.startup_update_job is not None:
+            self.after_cancel(self.startup_update_job)
+            self.startup_update_job = None
+        self.update_in_progress = True
+        self.help_menu.entryconfigure(0, label='Buscando actualizaciones…', state='disabled')
+        results = self.update_results
+        cache_path = DATA / 'updates.json'
+
+        def worker():
+            try:
+                release = latest_release(cache_path, force=manual)
+                results.put((manual, release, None))
+            except UpdateError as exc:
+                results.put((manual, None, str(exc)))
+        threading.Thread(target=worker, daemon=True).start()
+
+    def poll_updates(self):
+        try:
+            manual, release, error = self.update_results.get_nowait()
+        except queue.Empty:
+            return
+        self.update_in_progress = False
+        self.help_menu.entryconfigure(0, label='Buscar actualizaciones…', state='normal')
+        if error:
+            if manual:
+                messagebox.showinfo('Buscar actualizaciones', error, parent=self)
+            return
+        if release is not None and release.is_newer():
+            self.available_release = release
+            self.update_button.configure(text=f'Nueva versión {release.version}')
+            self.update_banner.pack(side='right', padx=8)
+        else:
+            self.available_release = None
+            self.update_banner.pack_forget()
+            if manual:
+                text = f'TM App {APP_VERSION} está actualizada.' if release else 'Todavía no hay versiones publicadas.'
+                messagebox.showinfo('Buscar actualizaciones', text, parent=self)
+
+    def open_update_page(self):
+        if self.available_release is not None:
+            webbrowser.open(self.available_release.url)
 
     def save_log(self):
         path = filedialog.asksaveasfilename(defaultextension='.txt', initialfile=f'TM App-{datetime.now():%Y%m%d-%H%M%S}.txt', filetypes=[('Registro de texto', '*.txt')])
@@ -865,6 +933,9 @@ class App(tk.Tk):
     def close_app(self):
         if self.busy and not messagebox.askyesno('Cerrar', 'Hay una secuencia en curso. ¿Cancelar y cerrar?'):
             return
+        if self.startup_update_job is not None:
+            self.after_cancel(self.startup_update_job)
+            self.startup_update_job = None
         self.disconnect()
         self.destroy()
 

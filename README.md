@@ -30,6 +30,7 @@ secuencias de teclas y macros para repetir tareas habituales de mantenimiento.
 | **Consola a tu gusto** | Personaliza la tipografía, el tamaño del texto y los colores. |
 | **Registro de sesión** | Guarda los envíos y las respuestas para revisarlos después. |
 | **Prueba del TM sin display** | Comprueba las 20 teclas del terminal físico, con contador por tecla y visualización de los códigos recibidos. |
+| **Avisos de nuevas versiones** | Detecta versiones publicadas en GitHub y abre su página de descarga. También puedes comprobarlas desde Ayuda. |
 
 ## Empezar
 
@@ -51,7 +52,7 @@ TM App/
 Para llevarte la app a otro PC, copia **toda la carpeta**. Para actualizar,
 sustituye únicamente el exe y conserva `datos`.
 
-Las versiones del ejecutable se publicarán en [Releases](https://github.com/MrDerekib/tm-app/releases).
+Descarga el ejecutable desde [Releases](https://github.com/MrDerekib/tm-app/releases).
 
 ## Más información
 
