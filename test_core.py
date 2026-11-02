@@ -7,8 +7,15 @@ from editor import key_command, delay_value
 
 
 class Tests(unittest.TestCase):
+    @staticmethod
+    def vp_profile():
+        """A single-machine fixture independent of other bundled profiles."""
+        profile = read_profile('machines.json')
+        profile['machines'] = [m for m in profile['machines'] if m['name'] == 'VP1994+']
+        return profile
+
     def test_import_destination_suggestions_do_not_guess_ambiguous_names(self):
-        local = read_profile('machines.json')
+        local = self.vp_profile()
         shared = copy.deepcopy(local)
         shared['machines'][0]['name'] = '  vp1994+  '
         self.assertEqual(suggest_profile_destinations(local, shared), {'  vp1994+  ': 'VP1994+'})
@@ -18,7 +25,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(suggest_profile_destinations(local, shared)['VP1994+'], 'VP1994+')
 
     def test_import_actions_into_differently_named_destination(self):
-        local = read_profile('machines.json')
+        local = self.vp_profile()
         shared = copy.deepcopy(local)
         shared['machines'][0]['name'] = 'VP 1994 Plus'
         shared['machines'][0]['connection']['baudrate'] = 9600
@@ -33,9 +40,9 @@ class Tests(unittest.TestCase):
         self.assertEqual(shared['machines'][0]['name'], 'VP 1994 Plus')
 
     def test_import_complete_destination_preserves_local_name_and_other_machines(self):
-        local = read_profile('machines.json')
+        local = self.vp_profile()
         local['machines'].append(dict(copy.deepcopy(local['machines'][0]), name='Otro equipo'))
-        shared = read_profile('machines.json')
+        shared = self.vp_profile()
         shared['machines'][0]['name'] = 'Alias'
         shared['machines'][0]['connection']['baudrate'] = 9600
         shared['machines'][0]['operations'] = shared['machines'][0]['operations'][:1]
@@ -47,7 +54,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(conflicts['machines'], ['VP1994+'])
 
     def test_import_new_destination_and_invalid_destinations(self):
-        local = read_profile('machines.json')
+        local = self.vp_profile()
         shared = copy.deepcopy(local)
         shared['machines'][0]['name'] = 'Alias'
         merged, conflicts = merge_selected_profiles(local, shared, {'Alias': None}, {'Alias': None})
@@ -60,7 +67,7 @@ class Tests(unittest.TestCase):
             merge_selected_profiles(local, local, {'VP1994+': None}, {'VP1994+': None})
 
     def test_import_multiple_sources_into_one_destination(self):
-        local = read_profile('machines.json')
+        local = self.vp_profile()
         shared = copy.deepcopy(local)
         shared['machines'][0]['name'] = 'Alias uno'
         shared['machines'].append(dict(copy.deepcopy(shared['machines'][0]), name='Alias dos'))
@@ -76,7 +83,7 @@ class Tests(unittest.TestCase):
             merge_selected_profiles(local, shared, selected, targets)
 
     def test_import_one_action_preserves_existing_machine(self):
-        local = read_profile('machines.json')
+        local = self.vp_profile()
         shared = copy.deepcopy(local)
         shared['machines'][0]['connection']['baudrate'] = 9600
         shared['machines'][0]['operations'][0]['steps'] = [{'send': 'X', 'delay_ms': 150}]
@@ -91,7 +98,7 @@ class Tests(unittest.TestCase):
         self.assertNotEqual(local['machines'][0]['operations'][0]['steps'], merged['machines'][0]['operations'][0]['steps'])
 
     def test_shared_profiles_replace_matches_and_keep_other_machines(self):
-        local = read_profile('machines.json')
+        local = self.vp_profile()
         local['machines'].append(dict(copy.deepcopy(local['machines'][0]), name='Equipo local'))
         shared = copy.deepcopy(local)
         shared['machines'] = [shared['machines'][0], dict(copy.deepcopy(shared['machines'][0]), name='Equipo nuevo')]
@@ -186,7 +193,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(terminal.lines), 2)
 
     def test_initial_sequences(self):
-        profile = read_profile('machines.json')
+        profile = self.vp_profile()
         ops = {op['name']: op for op in profile['machines'][0]['operations']}
         self.assertEqual(len(ops), 17)
         self.assertEqual([s['send'] for s in ops['Cálculo PID']['steps']], ['S', '3', '<ENTER>'])
@@ -211,7 +218,7 @@ class Tests(unittest.TestCase):
                 resolve_steps(steps, {'Cantidad': invalid})
 
     def test_legacy_machaque_upgrade_preserves_custom_macro(self):
-        profile = read_profile('machines.json')
+        profile = self.vp_profile()
         operation = next(op for op in profile['machines'][0]['operations'] if op['name'] == 'Machaque Título')
         self.assertEqual(operation['steps'][5]['default'], '50')
         operation['steps'][5] = {'send': '50', 'delay_ms': 200}
@@ -223,7 +230,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(operation['steps'][5]['send'], '75')
 
     def test_password_letters_are_paced_and_legacy_profiles_upgrade(self):
-        profile = read_profile('machines.json')
+        profile = self.vp_profile()
         operations = {op['name']: op for op in profile['machines'][0]['operations']}
         for name, count in (('Reset', 1), ('Borrar Estadísticas', 3), ('Borrar Telecarga', 1)):
             steps = operations[name]['steps']
@@ -253,7 +260,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(sent, [b'A'])
 
     def test_invalid_profile(self):
-        profile = read_profile('machines.json')
+        profile = self.vp_profile()
         profile['machines'][0]['operations'][0]['steps'][0]['delay_ms'] = -1
         with self.assertRaises(ValueError):
             validate(profile)

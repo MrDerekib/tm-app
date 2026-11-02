@@ -2,8 +2,8 @@
 
 [Volver a la presentación](../README.md)
 
-App Windows independiente para comandos RS-232. Perfil inicial VP1994+:
-COM1, 2400 baudios, 8N1, sin control de flujo.
+App Windows independiente para comandos RS-232. Se incluyen los perfiles
+VP1994+, Procesador DMX y Procesador MVE, cada uno con su configuración y acciones.
 El icono compacto representa el TM físico en vertical. El mismo diseño se usa
 en el ejecutable, la barra de tareas, la barra de título y la cabecera.
 Los datos se guardan en una carpeta `datos` junto a `TM App.exe` (o junto a
@@ -77,8 +77,8 @@ puntos, color de texto y color de fondo con vista previa. Pulsa **Guardar** para
 aplicarlo y conservarlo entre sesiones. **Cancelar** conserva el aspecto anterior.
 Las preferencias se guardan en `datos/appearance.json`.
 
-Se incluyen 17 operaciones de comandos, entre ellas **Cálculo PID** para VP1994+;
-la transferencia de firmware queda pendiente. Las operaciones se ejecutan
+VP1994+ incluye 17 operaciones, Procesador DMX incluye 30 y Procesador MVE incluye
+27. La transferencia de firmware queda pendiente. Las operaciones se ejecutan
 directamente; las que tienen valores variables piden esos datos antes del envío.
 **Machaque Título** pide la cantidad al ejecutarse, proponiendo 50. Puedes cambiarla
 en cada ejecución; el valor debe contener solo dígitos.

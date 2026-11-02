@@ -525,6 +525,1620 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Procesador DMX",
+      "connection": {
+        "port": "COM1",
+        "baudrate": 2400,
+        "bytesize": 8,
+        "parity": "N",
+        "stopbits": 2.0,
+        "flow": "none",
+        "enter": "\r"
+      },
+      "operations": [
+        {
+          "name": "Reset",
+          "description": "",
+          "steps": [
+            {
+              "send": "R",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test SERVO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Ver ESTADO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "V",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test rapido ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "Q",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test CHEQUEO FOTOCELULAS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test ESTADO TAPA",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test CUCHILLA",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "4",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test EMBRAGUE",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "6",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test CORTE",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "7",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test DESVIADOR",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "9",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test DESTRUCTOR",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "D",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test FOTOCELULAS una a una",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Estado ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Avance / retroceso ROLLO 1",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Avance / retroceso ROLLO 2",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Avance / retroceso ROLLO 3",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "4",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "5",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Avance / retroceso ROLLO 4",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "6",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "7",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Cálculo PID",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test Velocidad servo +1000",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test Velocidad servo -1000",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "6",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Velocidad limpieza SERVO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "IMPRESION NORMAL",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "E",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Rollo",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Número de tickets",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "IMPRESIÓN T-MOBILITAT",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "I",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Rollo",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "7",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "MACHAQUE GRABACIÓN",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "M",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Número de Machaques",
+              "default": "10",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "MACHAQUE LECTURA",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "M",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Número de Machaques",
+              "default": "10",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "COMUNICACIÓN",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "K",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "TEST AVANCE / RETROCESO TODOS LOS ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "4",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "5",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "6",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "7",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            }
+          ]
+        },
+        {
+          "name": "VELOCIDADES SERVO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Velocidades",
+              "default": "0",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "IMPRESIÓN T-MOBILITAT FGC",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "I",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Rollo",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Procesador MVE",
+      "connection": {
+        "port": "COM1",
+        "baudrate": 2400,
+        "bytesize": 8,
+        "parity": "N",
+        "stopbits": 1.0,
+        "flow": "none",
+        "enter": "\r"
+      },
+      "operations": [
+        {
+          "name": "Reset",
+          "description": "",
+          "steps": [
+            {
+              "send": "R",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test SERVO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Ver ESTADO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "V",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test rapido ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "Q",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test CHEQUEO FOTOCELULAS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test ESTADO TAPA",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "4",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test CUCHILLA",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "T",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test RELÉ",
+          "description": "Solo para MVE",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "5",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test EMBRAGUE",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "6",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test CORTE",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "7",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test FOTOCELULAS una a una",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Estado ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Avance / retroceso ROLLO 1",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Avance / retroceso ROLLO 2",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Cálculo PID",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test Velocidad servo +1000",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Test Velocidad servo -1000",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "6",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "Velocidad limpieza SERVO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "IMPRESION NORMAL",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "E",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Rollo",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Número de tickets",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "IMPRESIÓN T-MOBILITAT",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "I",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Rollo",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "7",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "MACHAQUE GRABACIÓN",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "M",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Número de Machaques",
+              "default": "10",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "MACHAQUE LECTURA",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "M",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Número de Machaques",
+              "default": "10",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "COMUNICACIÓN",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "K",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "TEST AVANCE / RETROCESO TODOS LOS ROLLOS",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "1",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 1000
+            },
+            {
+              "send": "8",
+              "delay_ms": 200
+            },
+            {
+              "send": "3",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "VELOCIDADES SERVO",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "S",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Velocidades",
+              "default": "0",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        },
+        {
+          "name": "IMPRESIÓN T-MOBILITAT FGC",
+          "description": "",
+          "steps": [
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            },
+            {
+              "send": "I",
+              "delay_ms": 200
+            },
+            {
+              "parameter": "Rollo",
+              "default": "1",
+              "kind": "number",
+              "delay_ms": 200
+            },
+            {
+              "send": "2",
+              "delay_ms": 200
+            },
+            {
+              "send": "0",
+              "delay_ms": 200
+            },
+            {
+              "send": "<ENTER>",
+              "delay_ms": 200
+            }
+          ]
+        }
+      ]
     }
   ]
 }

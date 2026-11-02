@@ -2,6 +2,8 @@
 
 ## Próxima versión
 
+- Perfiles incluidos para Procesador DMX (30 operaciones) y Procesador MVE
+  (27 operaciones), conservando sus secuencias y pausas.
 - Reordenación de acciones mediante drag and drop en Operaciones y en el editor,
   con desplazamiento automático de listas largas y orden guardado por equipo.
 - Corregida la edición de pausas de macros: «Aplicar a todas» conserva la

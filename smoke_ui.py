@@ -18,6 +18,8 @@ class TestTransport(Simulator):
 with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
     app.DATA = Path(temp) / 'datos'
     gui = app.App()
+    # Keep import, creation and deletion scenarios independent of bundled additions.
+    gui.store_profiles({'machines': [copy.deepcopy(gui.current())]}, gui.machine.get())
     gui.withdraw()
     assert gui.handle_enter(SimpleNamespace(widget='.!combobox.popdown')) is None
     with patch.object(gui, 'send_from_input') as send:
