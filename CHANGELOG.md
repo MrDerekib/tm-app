@@ -15,6 +15,7 @@
 - Corregida la edición de pausas de macros: «Aplicar a todas» conserva la
   selección y «Cambiar pausa seleccionada» actualiza el paso sin perderla.
 - Campos de pausa identificados e indicación cuando falta seleccionar un paso.
+- Aspecto de Ayuda y de la configuración de la prueba del TM unificado con la UI.
 
 ## 1.0.0
 

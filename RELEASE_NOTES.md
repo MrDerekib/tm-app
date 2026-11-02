@@ -18,6 +18,8 @@
 - Corregida la edición de pausas de las macros: aplicar una pausa a todos los
   pasos conserva la selección y permite seguir editando un paso concreto.
 - Campos de pausa identificados e indicación cuando falta seleccionar un paso.
+- Aspecto de Ayuda y de la configuración de la prueba del TM unificado con el
+  resto de la interfaz.
 
 ## Actualizar
 

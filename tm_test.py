@@ -57,7 +57,7 @@ class TMTestWindow(tk.Toplevel):
         ttk.Label(root, text='Prueba de TM sin display', style='Section.TLabel').pack(anchor='w')
         ttk.Label(root, text='Conecta y pulsa las teclas del TM físico. Cada recepción marca su tecla y suma una pulsación.',
                   style='Status.TLabel', wraplength=800).pack(anchor='w', pady=(4, 10))
-        connection = ttk.LabelFrame(root, text='Conexión', padding=10)
+        connection = ttk.LabelFrame(root, text='Conexión', padding=10, style='Card.TLabelframe')
         connection.pack(fill='x')
         definitions = (
             ('Puerto', 'port', port or 'COM1', ()),
@@ -68,10 +68,10 @@ class TMTestWindow(tk.Toplevel):
             ('Control de flujo', 'flow', 'Ninguno', ('Ninguno', 'RTS/CTS', 'XON/XOFF', 'DSR/DTR')),
         )
         for index, (label, key, default, options) in enumerate(definitions):
-            cell = ttk.Frame(connection)
+            cell = ttk.Frame(connection, style='Card.TFrame')
             cell.grid(row=index // 3, column=index % 3, sticky='ew', padx=6, pady=3)
             connection.columnconfigure(index % 3, weight=1)
-            ttk.Label(cell, text=label).pack(anchor='w')
+            ttk.Label(cell, text=label, style='Card.TLabel').pack(anchor='w')
             self.fields[key] = variable = tk.StringVar(value=default)
             self.inputs[key] = entry = ttk.Combobox(cell, textvariable=variable, values=options, width=14,
                                                    state='normal' if key in ('port', 'baudrate') else 'readonly')

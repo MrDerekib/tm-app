@@ -143,6 +143,9 @@ class App(tk.Tk):
                         lightcolor=UI['surface'], darkcolor=UI['border'], padding=(10, 6), font=('Segoe UI', 9))
         style.map('TButton', background=[('disabled', UI['disabled']), ('pressed', UI['accent_soft']), ('active', UI['accent_soft'])],
                   foreground=[('disabled', UI['muted'])])
+        style.configure('TMenubutton', **style.configure('TButton'), arrowcolor=UI['text'])
+        style.map('TMenubutton', **style.map('TButton'),
+                  arrowcolor=[('disabled', UI['muted']), ('!disabled', UI['text'])])
         style.configure('Primary.TButton', background=UI['accent'], foreground=UI['surface'], bordercolor=UI['accent'],
                         lightcolor=UI['accent'], darkcolor=UI['accent'], padding=(12, 7), font=('Segoe UI', 9, 'bold'))
         style.map('Primary.TButton', background=[('disabled', UI['disabled']), ('pressed', UI['accent_hover']), ('active', UI['accent_hover'])],
