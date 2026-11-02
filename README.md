@@ -24,7 +24,7 @@ secuencias de teclas y macros para repetir tareas habituales de mantenimiento.
 | :--- | :--- |
 | **Consola serie** | Envía comandos manualmente y consulta las respuestas del equipo en tiempo real. |
 | **Perfiles independientes** | Cada máquina tiene su propia conexión y su lista de operaciones. |
-| **Secuencias de comandos** | Ejecuta operaciones guardadas con un botón, doble clic o Intro. |
+| **Secuencias de comandos** | Ejecuta operaciones guardadas con un botón, doble clic o Intro, y ordénalas arrastrando. |
 | **Grabación de macros** | Captura teclas, asigna un nombre y ajusta las pausas entre pulsaciones. También puedes pedir valores al ejecutar. |
 | **Perfiles compartidos** | Exporta e importa equipos completos o solo los comandos que necesites, eligiendo el perfil de destino. |
 | **Consola a tu gusto** | Personaliza la tipografía, el tamaño del texto y los colores. |

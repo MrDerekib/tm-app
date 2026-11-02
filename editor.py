@@ -5,6 +5,7 @@ from tkinter import ttk, messagebox
 
 from core import validate, validate_parameter_step
 from ui_theme import UI
+from reorder import ListboxReorder
 
 
 def key_command(keysym, char, control=False):
@@ -327,6 +328,8 @@ class ProfileEditor(tk.Toplevel):
         actions_card = ttk.Frame(root, style='Card.TFrame', padding=(14, 12))
         actions_card.pack(fill='both', expand=True)
         ttk.Label(actions_card, text='Acciones del equipo', style='Section.TLabel').pack(anchor='w')
+        ttk.Label(actions_card, text='Arrastra las acciones para cambiar su orden.',
+                  style='Subtitle.TLabel').pack(anchor='w', pady=(3, 0))
         list_frame = ttk.Frame(actions_card, style='Border.TFrame', padding=1)
         list_frame.pack(fill='both', expand=True, pady=(8, 10))
         self.actions = tk.Listbox(list_frame, font=('Segoe UI', 10), exportselection=False, height=8, width=1,
@@ -336,6 +339,7 @@ class ProfileEditor(tk.Toplevel):
         self.actions.configure(yscrollcommand=actions_scroll.set)
         actions_scroll.pack(side='right', fill='y')
         self.actions.pack(side='left', fill='both', expand=True)
+        self.actions_reorder = ListboxReorder(self.actions, self.reorder_actions)
         buttons = ttk.Frame(actions_card, style='Card.TFrame')
         buttons.pack(fill='x')
         ttk.Button(buttons, text='Grabar nuevo comando', command=self.record_action, style='Primary.TButton').pack(side='left')
@@ -446,6 +450,11 @@ class ProfileEditor(tk.Toplevel):
         selected = self.actions.curselection()
         if selected:
             self.record_action(selected[0])
+
+    def reorder_actions(self, source, target):
+        operations = self.machine()['operations']
+        operations.insert(target, operations.pop(source))
+        return True
 
     def delete_action(self):
         selected = self.actions.curselection()

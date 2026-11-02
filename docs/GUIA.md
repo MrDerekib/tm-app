@@ -67,6 +67,11 @@ solo el exe y conserva `datos`. Usa una carpeta en la que puedas escribir.
    El registro exportado incluye RX escapado para conservar los caracteres recibidos.
 5. Guarda el registro desde la barra superior.
 
+Puedes cambiar el orden de **Operaciones** arrastrando una acción hasta su nueva
+posición. Una marca indica dónde quedará; al acercarte a los extremos, la lista
+se desplaza. El orden se guarda al soltar y es independiente para cada equipo.
+Durante el envío de una secuencia el reordenamiento queda bloqueado.
+
 **Aspecto de la consola** permite elegir tipografía instalada, tamaño de 6 a 48
 puntos, color de texto y color de fondo con vista previa. Pulsa **Guardar** para
 aplicarlo y conservarlo entre sesiones. **Cancelar** conserva el aspecto anterior.
@@ -110,6 +115,9 @@ Desconecta y pulsa **Equipos y acciones**:
 
 **Editar acción y pausas** permite modificar acciones existentes o continuar
 su grabación. Los comandos ya incluidos conservan sus pausas originales.
+También puedes arrastrar las acciones dentro del editor para reordenarlas;
+ese orden se aplica al pulsar **Guardar equipos y acciones**. Cerrar el editor
+sin guardar descarta el cambio de orden.
 **Eliminar equipo** elimina el equipo seleccionado y todas sus acciones tras
 confirmarlo. La eliminación se aplica al pulsar **Guardar equipos y acciones**;
 cerrar el editor sin guardar la descarta. Debe quedar al menos un equipo.

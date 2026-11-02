@@ -16,6 +16,7 @@ from editor import ProfileEditor
 from profile_picker import ProfilePicker
 from ui_theme import UI
 from storage import portable_data_directory
+from reorder import ListboxReorder
 
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
 DATA = portable_data_directory(__file__, sys.executable, frozen=getattr(sys, 'frozen', False))
@@ -218,6 +219,7 @@ class App(tk.Tk):
         body.add(left, weight=1)
         body.add(right, weight=3)
         ttk.Label(left, text='Operaciones', style='Section.TLabel').pack(anchor='w')
+        ttk.Label(left, text='Arrastra para reordenar', style='Subtitle.TLabel').pack(anchor='w', pady=(3, 0))
         operations_frame = ttk.Frame(left, style='Border.TFrame', padding=1)
         operations_frame.pack(fill='both', expand=True, pady=8)
         self.ops = tk.Listbox(operations_frame, font=('Segoe UI', 10), activestyle='none', exportselection=False,
@@ -229,7 +231,8 @@ class App(tk.Tk):
         operations_scroll.pack(side='right', fill='y')
         self.ops.pack(side='left', fill='both', expand=True)
         self.ops.bind('<<ListboxSelect>>', self.preview)
-        self.ops.bind('<Double-Button-1>', self.execute_from_list)
+        self.ops_reorder = ListboxReorder(self.ops, self.reorder_operations,
+                                         enabled=lambda: not self.busy, on_double_click=self.execute_from_list)
         detail_frame = ttk.LabelFrame(left, text='Detalles de la operación', style='Card.TLabelframe', padding=6)
         detail_frame.pack(fill='x', pady=(0, 8))
         self.detail = tk.Text(detail_frame, width=1, height=4, wrap='word', font=('Segoe UI', 9), state='disabled',
@@ -822,11 +825,29 @@ class App(tk.Tk):
             return
         return ProfileEditor(self, self.profiles, self.machine.get(), self.store_profiles)
 
-    def store_profiles(self, data, selected_name):
+    def persist_profiles(self, data):
         temp = self.profile_path.with_suffix('.tmp')
         temp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
         temp.replace(self.profile_path)
         self.profiles = data
+
+    def reorder_operations(self, source, target):
+        if self.busy:
+            return False
+        data = copy.deepcopy(self.profiles)
+        machine = next(m for m in data['machines'] if m['name'] == self.machine.get())
+        operations = machine['operations']
+        operations.insert(target, operations.pop(source))
+        try:
+            self.persist_profiles(data)
+        except OSError as exc:
+            messagebox.showerror('No se pudo guardar el orden', str(exc), parent=self)
+            return False
+        self.log('INFO', f'Orden de operaciones guardado: {machine["name"]}')
+        return True
+
+    def store_profiles(self, data, selected_name):
+        self.persist_profiles(data)
         self.machine.configure(values=[m['name'] for m in data['machines']])
         self.machine.set(selected_name)
         self.change_machine()
