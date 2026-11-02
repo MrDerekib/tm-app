@@ -238,9 +238,11 @@ respuestas para evaluar pruebas siguen pendientes.
 Desde la carpeta del proyecto, con PyInstaller instalado en `.venv`:
 
 ```powershell
-& .\.venv\Scripts\python.exe -m PyInstaller --noconfirm --clean '.\TM App.spec'
+$tmBuildPath = Join-Path $env:TEMP ('TM-App-build-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+& .\.venv\Scripts\python.exe -m PyInstaller --noconfirm --workpath $tmBuildPath '.\TM App.spec'
 ```
 
+Los temporales se crean en una carpeta nueva fuera de OneDrive en cada ejecución.
 Genera `dist/TM App.exe`, un ejecutable independiente sin instalador ni consola.
 Incluye el perfil inicial, los iconos de la interfaz y el recurso de icono del
 ejecutable, además de la versión 1.1.0 en las propiedades de Windows.

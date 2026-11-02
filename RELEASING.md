@@ -14,8 +14,12 @@ La compilación y la publicación se realizan manualmente.
 3. Compila el ejecutable:
 
    ```powershell
-   & .\.venv\Scripts\python.exe -m PyInstaller --noconfirm --clean '.\TM App.spec'
+   $tmBuildPath = Join-Path $env:TEMP ('TM-App-build-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+   & .\.venv\Scripts\python.exe -m PyInstaller --noconfirm --workpath $tmBuildPath '.\TM App.spec'
    ```
+
+   Cada ejecución usa una carpeta temporal nueva fuera de OneDrive para evitar
+   bloqueos de la caché en la carpeta sincronizada del proyecto.
 
 4. Comprueba `dist/TM App.exe` en Windows: arranque, iconos, perfiles, importación
    y comunicación con el equipo. Comprueba también que funciona sin Python instalado.
