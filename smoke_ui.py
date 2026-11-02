@@ -92,6 +92,11 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
         gui.toggle_connection()
         serial_factory.assert_called_once_with('COM7', baudrate=9600, bytesize=8, parity='E', stopbits=1.0, timeout=0.1, write_timeout=1, xonxoff=False, rtscts=True, dsrdtr=False)
     assert str(gui.settings_btn.cget('state')) == 'disabled'
+    assert str(gui.tm_test_btn.cget('state')) == 'disabled'
+    with patch('app.TMTestWindow') as tester, patch('app.messagebox.showinfo') as notice:
+        gui.open_tm_test()
+        tester.assert_not_called()
+        notice.assert_called_once()
     assert gui.transport is not None
     assert not any(isinstance(widget, app.ttk.Checkbutton) and widget.cget('text') == 'Confirmar operaciones sensibles'
                    for widget in descendants(gui))
@@ -147,6 +152,7 @@ with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temp:
     assert abs(dy - (gui.winfo_height() - height) // 2) <= 2
     gui.withdraw()
     assert str(gui.settings_btn.cget('state')) == 'normal'
+    assert str(gui.tm_test_btn.cget('state')) == 'normal'
     gui.save_connection()
     saved = read_profile(gui.profile_path)['machines'][0]['connection']
     assert (saved['port'], saved['baudrate'], saved['parity'], saved['flow'], saved['enter']) == ('COM7', 9600, 'E', 'rtscts', '\r\n')

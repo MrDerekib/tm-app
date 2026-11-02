@@ -161,6 +161,36 @@ Si cambias la conexión en la pantalla principal, pulsa **Guardar para este equi
 antes de exportar para incluir los ajustes nuevos. El archivo compartido incluye
 las secuencias de comandos tal como están guardadas.
 
+## Probar un TM sin display
+
+Pulsa **Probar TM sin display** en la cabecera. Si la consola serie está conectada,
+desconéctala primero para liberar el puerto. La prueba tiene su propia conexión,
+editable y con los valores habituales del TM por defecto.
+
+1. Selecciona el puerto y pulsa **Conectar**.
+2. Pulsa las teclas del TM físico. La vista reproduce su distribución, marca
+   cada tecla recibida y muestra cuántas veces se ha pulsado.
+3. El resumen indica cuántas de las 20 teclas han enviado su código. El registro
+   conserva cada carácter, incluyendo controles y códigos desconocidos, en hexadecimal.
+4. **Reiniciar prueba** vacía los contadores y el registro de la vista sin desconectar.
+   **Guardar registro** exporta los datos a un archivo de texto.
+5. Al cerrar la prueba se libera el puerto.
+
+Este modo solo recibe: no envía Intro al conectar ni transmite comandos al TM.
+Los números, S y N envían su propio carácter. Las teclas especiales se capturaron
+en un TM físico con estos resultados:
+
+| Tecla | Código hexadecimal |
+| :--- | :--- |
+| ESC | `1B` |
+| F1 | `46` (carácter `F`) |
+| CR | `0D` |
+| A | `24` (carácter `$`) |
+| ↑ | `B2` |
+| ← | `B4` |
+| ↓ | `B8` |
+| → | `B6` |
+
 ## Desarrollo
 
 Desde la carpeta del proyecto, con Python para Windows instalado:

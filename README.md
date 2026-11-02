@@ -29,6 +29,7 @@ secuencias de teclas y macros para repetir tareas habituales de mantenimiento.
 | **Perfiles compartidos** | Exporta e importa equipos completos o solo los comandos que necesites, eligiendo el perfil de destino. |
 | **Consola a tu gusto** | Personaliza la tipografía, el tamaño del texto y los colores. |
 | **Registro de sesión** | Guarda los envíos y las respuestas para revisarlos después. |
+| **Prueba del TM sin display** | Comprueba las 20 teclas del terminal físico, con contador por tecla y visualización de los códigos recibidos. |
 
 ## Empezar
 

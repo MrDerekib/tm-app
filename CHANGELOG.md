@@ -2,6 +2,8 @@
 
 ## Próxima versión
 
+- Modo de prueba del TM sin display, con las 20 teclas, contadores y registro
+  hexadecimal. Solo recibe datos; códigos de teclas verificados en un TM físico.
 - Perfiles incluidos para Procesador DMX (30 operaciones) y Procesador MVE
   (27 operaciones), conservando sus secuencias y pausas.
 - Reordenación de acciones mediante drag and drop en Operaciones y en el editor,

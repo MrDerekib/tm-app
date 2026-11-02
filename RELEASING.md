@@ -21,6 +21,8 @@ La compilación y la publicación se realizan manualmente.
    El primer arranque crea `dist/datos` con el perfil inicial. Para comprobar un
    arranque nuevo, copia solo el exe a una carpeta vacía; para comprobar la
    portabilidad de los perfiles, copia el exe junto con `datos` a otra carpeta.
+   Comprueba también **Probar TM sin display**: recepción y contadores de las
+   teclas, registro hexadecimal y liberación del puerto al cerrar la prueba.
 5. En GitHub, crea una release con la etiqueta `v1.0.0` para la primera versión.
    Usa `TM App v1.0.0` como título, añade las notas correspondientes y adjunta
    `dist/TM App.exe`.

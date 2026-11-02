@@ -17,6 +17,7 @@ from profile_picker import ProfilePicker
 from ui_theme import UI
 from storage import portable_data_directory
 from reorder import ListboxReorder
+from tm_test import TMTestWindow
 
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
 DATA = portable_data_directory(__file__, sys.executable, frozen=getattr(sys, 'frozen', False))
@@ -181,6 +182,8 @@ class App(tk.Tk):
         title.pack(side='left')
         ttk.Label(title, text='TM App', style='Title.TLabel').pack(anchor='w')
         ttk.Label(title, text='Terminal de Mantenimiento  ·  RS-232', style='Subtitle.TLabel').pack(anchor='w')
+        self.tm_test_btn = ttk.Button(header, text='Probar TM sin display', command=self.open_tm_test)
+        self.tm_test_btn.pack(side='right')
         connection_card = ttk.Frame(root, style='Card.TFrame', padding=(14, 10))
         connection_card.pack(fill='x', pady=(0, 10))
         bar = ttk.Frame(connection_card, style='Card.TFrame')
@@ -491,7 +494,7 @@ class App(tk.Tk):
         # so the operator can interrupt it and type the next command immediately.
         self.send_btn.configure(state='normal' if connected else 'disabled')
         self.stop_btn.configure(state='normal' if self.busy else 'disabled')
-        for widget in (self.edit_btn, self.import_btn, self.refresh_btn, self.settings_btn):
+        for widget in (self.edit_btn, self.import_btn, self.refresh_btn, self.settings_btn, self.tm_test_btn):
             widget.configure(state='disabled' if connected else 'normal')
         self.machine.configure(state='disabled' if connected else 'readonly')
         self.port.configure(state='disabled' if connected else 'normal')
@@ -824,6 +827,12 @@ class App(tk.Tk):
         if self.transport is not None:
             return
         return ProfileEditor(self, self.profiles, self.machine.get(), self.store_profiles)
+
+    def open_tm_test(self):
+        if self.transport is not None:
+            messagebox.showinfo('Prueba de TM', 'Desconecta el equipo antes de abrir la prueba del TM.', parent=self)
+            return
+        return TMTestWindow(self, port=self.port.get().strip() or 'COM1')
 
     def persist_profiles(self, data):
         temp = self.profile_path.with_suffix('.tmp')

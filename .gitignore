@@ -8,6 +8,7 @@ dist/
 .env
 .env.*
 /TM App-*.txt
+/TM-prueba-teclas*.txt
 /equipo-*.txt
 /appearance.json
 /preferences.json
