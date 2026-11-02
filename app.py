@@ -244,7 +244,9 @@ class App(tk.Tk):
         body.add(left, weight=1)
         body.add(right, weight=3)
         ttk.Label(left, text='Operaciones', style='Section.TLabel').pack(anchor='w')
-        ttk.Label(left, text='Arrastra para reordenar', style='Subtitle.TLabel').pack(anchor='w', pady=(3, 0))
+        self.reorder_hint = tk.StringVar(value='Arrastra para reordenar')
+        ttk.Label(left, textvariable=self.reorder_hint, width=1,
+                  style='Subtitle.TLabel').pack(fill='x', pady=(3, 0))
         operations_frame = ttk.Frame(left, style='Border.TFrame', padding=1)
         operations_frame.pack(fill='both', expand=True, pady=8)
         self.ops = tk.Listbox(operations_frame, font=('Segoe UI', 10), activestyle='none', exportselection=False,
@@ -257,7 +259,8 @@ class App(tk.Tk):
         self.ops.pack(side='left', fill='both', expand=True)
         self.ops.bind('<<ListboxSelect>>', self.preview)
         self.ops_reorder = ListboxReorder(self.ops, self.reorder_operations,
-                                         enabled=lambda: not self.busy, on_double_click=self.execute_from_list)
+                                         enabled=lambda: not self.busy, on_double_click=self.execute_from_list,
+                                         on_feedback=self.reorder_hint.set, drop_message='Orden guardado')
         detail_frame = ttk.LabelFrame(left, text='Detalles de la operación', style='Card.TLabelframe', padding=6)
         detail_frame.pack(fill='x', pady=(0, 8))
         self.detail = tk.Text(detail_frame, width=1, height=4, wrap='word', font=('Segoe UI', 9), state='disabled',
@@ -377,6 +380,8 @@ class App(tk.Tk):
         return next(m for m in self.profiles['machines'] if m['name'] == self.machine.get())
 
     def change_machine(self, event=None):
+        self.ops_reorder.cancel()
+        self.reorder_hint.set('Arrastra para reordenar')
         m = self.current()
         c = m['connection']
         self.port.set(c.get('port', 'COM1'))

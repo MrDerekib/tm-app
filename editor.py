@@ -328,8 +328,9 @@ class ProfileEditor(tk.Toplevel):
         actions_card = ttk.Frame(root, style='Card.TFrame', padding=(14, 12))
         actions_card.pack(fill='both', expand=True)
         ttk.Label(actions_card, text='Acciones del equipo', style='Section.TLabel').pack(anchor='w')
-        ttk.Label(actions_card, text='Arrastra las acciones para cambiar su orden.',
-                  style='Subtitle.TLabel').pack(anchor='w', pady=(3, 0))
+        self.reorder_hint = tk.StringVar(value='Arrastra las acciones para cambiar su orden.')
+        ttk.Label(actions_card, textvariable=self.reorder_hint, width=1,
+                  style='Subtitle.TLabel').pack(fill='x', pady=(3, 0))
         list_frame = ttk.Frame(actions_card, style='Border.TFrame', padding=1)
         list_frame.pack(fill='both', expand=True, pady=(8, 10))
         self.actions = tk.Listbox(list_frame, font=('Segoe UI', 10), exportselection=False, height=8, width=1,
@@ -339,7 +340,9 @@ class ProfileEditor(tk.Toplevel):
         self.actions.configure(yscrollcommand=actions_scroll.set)
         actions_scroll.pack(side='right', fill='y')
         self.actions.pack(side='left', fill='both', expand=True)
-        self.actions_reorder = ListboxReorder(self.actions, self.reorder_actions)
+        self.actions_reorder = ListboxReorder(self.actions, self.reorder_actions,
+                                             on_feedback=self.reorder_hint.set,
+                                             drop_message='Orden cambiado · Pendiente de guardar')
         buttons = ttk.Frame(actions_card, style='Card.TFrame')
         buttons.pack(fill='x')
         ttk.Button(buttons, text='Grabar nuevo comando', command=self.record_action, style='Primary.TButton').pack(side='left')
@@ -360,6 +363,8 @@ class ProfileEditor(tk.Toplevel):
         return self.draft['machines'][self.index]
 
     def load_machine(self):
+        self.actions_reorder.cancel()
+        self.reorder_hint.set('Arrastra las acciones para cambiar su orden.')
         machine = self.machine()
         self.selector.configure(values=[m['name'] for m in self.draft['machines']])
         self.selector.current(self.index)

@@ -76,12 +76,61 @@ class ReorderTests(unittest.TestCase):
         self.drag(self.gui.ops, 2, 0)
         self.assertEqual(read_profile(self.gui.profile_path), self.original)
 
+    def test_drag_feedback_shows_name_destination_cursor_and_saved_result(self):
+        widget = self.gui.ops
+        source_name = widget.get(0)
+        x, y = self.point(widget, 0)
+        self.emit(widget, '<Motion>', x, y, 2000)
+        self.assertEqual(str(widget.cget('cursor')), 'hand2')
+        self.emit(widget, '<ButtonPress-1>', x, y, 3000)
+        bounds = widget.bbox(2)
+        target_y = bounds[1] + bounds[3] // 2
+        self.emit(widget, '<B1-Motion>', x, target_y, 3050)
+        helper = self.gui.ops_reorder
+        self.assertEqual(str(widget.cget('cursor')), 'sb_v_double_arrow')
+        self.assertTrue(helper.marker.winfo_ismapped())
+        self.assertEqual(helper.marker.winfo_height(), 4)
+        self.assertTrue(helper.ghost.winfo_ismapped())
+        self.assertIn(source_name, helper.ghost.cget('text'))
+        self.assertIn('Posición 3', helper.ghost.cget('text'))
+        self.assertIn('Esc cancela', self.gui.reorder_hint.get())
+        self.emit(widget, '<ButtonRelease-1>', x, target_y, 3100)
+        self.assertIsNone(helper.ghost)
+        self.assertFalse(helper.marker.winfo_ismapped())
+        self.assertIn('Orden guardado', self.gui.reorder_hint.get())
+        self.assertEqual(str(widget.cget('cursor')), 'hand2')
+
+    def test_escape_cancels_drag_and_removes_its_visuals_without_executing(self):
+        widget = self.gui.ops
+        helper = self.gui.ops_reorder
+        before = self.gui.profile_path.read_bytes()
+        x, y = self.point(widget, 0)
+        widget.focus_force()
+        self.gui.update()
+        self.emit(widget, '<ButtonPress-1>', x, y, 3000)
+        target_y = widget.bbox(2)[1] + 4
+        self.emit(widget, '<B1-Motion>', x, target_y, 3050)
+        self.assertTrue(helper.dragging)
+        self.emit(widget, '<Escape>', x, target_y, 3070)
+        self.assertIsNone(helper.ghost)
+        self.assertTrue(helper.cancelled)
+        self.assertIn('cancelada', self.gui.reorder_hint.get())
+        with patch.object(self.gui, 'execute') as execute:
+            self.emit(widget, '<B1-Motion>', x, target_y + 15, 3080)
+            self.emit(widget, '<ButtonRelease-1>', x, target_y, 3100)
+            helper.double_release(SimpleNamespace(x=x, y=target_y))
+            execute.assert_not_called()
+        self.assertEqual(self.gui.profile_path.read_bytes(), before)
+        self.assertIsNone(helper.scroll_job)
+        self.assertFalse(helper.cancelled)
+
     def test_failed_save_busy_state_and_drop_outside_keep_original_order(self):
         before = self.gui.profile_path.read_bytes()
         with patch.object(self.gui, 'persist_profiles', side_effect=OSError('Test write failure')), \
              patch('app.messagebox.showerror') as error:
             self.drag(self.gui.ops, 0, 2)
             error.assert_called_once()
+        self.assertIn('No se pudo cambiar', self.gui.reorder_hint.get())
         self.assertEqual(self.gui.profiles, self.original)
         self.assertEqual(self.gui.profile_path.read_bytes(), before)
         self.assertEqual(self.gui.ops.get(0), self.original['machines'][0]['operations'][0]['name'])
@@ -93,7 +142,11 @@ class ReorderTests(unittest.TestCase):
         self.clock += 2000
         self.emit(self.gui.ops, '<ButtonPress-1>', x, y, self.clock)
         self.emit(self.gui.ops, '<B1-Motion>', -20, y + 40, self.clock + 50)
+        self.assertEqual(str(self.gui.ops.cget('cursor')), 'no')
+        self.assertIn('cancelar', self.gui.ops_reorder.ghost.cget('text'))
         self.emit(self.gui.ops, '<ButtonRelease-1>', -20, y + 40, self.clock + 100)
+        self.assertIsNone(self.gui.ops_reorder.ghost)
+        self.assertIn('cancelada', self.gui.reorder_hint.get())
         self.assertEqual(self.gui.profile_path.read_bytes(), before)
 
     def test_double_click_still_executes_and_drag_scrolls_to_hidden_rows(self):
@@ -123,6 +176,7 @@ class ReorderTests(unittest.TestCase):
         editor = self.gui.edit_profiles()
         self.gui.update()
         self.drag(editor.actions, 0, 2)
+        self.assertIn('Pendiente de guardar', editor.reorder_hint.get())
         expected = copy.deepcopy(editor.machine()['operations'])
         self.assertNotEqual(expected, self.original['machines'][0]['operations'])
         self.assertEqual(self.gui.profile_path.read_bytes(), before)

@@ -8,7 +8,8 @@
   contadores de pulsaciones y registro de los códigos recibidos. Verificado con
   un TM físico y conexión solo de recepción.
 - **Acciones ordenadas a tu gusto:** arrastra y suelta para reordenarlas en la
-  lista de operaciones o en el editor de equipos. El orden se guarda por equipo.
+  lista de operaciones o en el editor de equipos. Una etiqueta muestra la acción
+  y su destino; Escape cancela el arrastre. El orden se guarda por equipo.
 - **Más perfiles incluidos:** Procesador DMX con 30 operaciones y Procesador MVE
   con 27, junto al perfil de VP existente.
 
